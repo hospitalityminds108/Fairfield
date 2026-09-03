@@ -135,14 +135,36 @@ if (siteHeader) {
   restart();
 })();
 
-// ---------- Enquiry form ----------
+// ---------- Enquiry form (sends lead to WhatsApp) ----------
 const leadForm = document.getElementById('leadForm');
 if (leadForm) {
+  const WHATSAPP_NUMBER = '919833012386'; // +91 9833012386, no plus/spaces for the wa.me link
+
   leadForm.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    const name = leadForm.name.value.trim();
+    const mobile = leadForm.mobile.value.trim();
+    const email = leadForm.email.value.trim();
+    const event = leadForm.event.value;
+    const message = leadForm.message.value.trim();
+
+    let waText =
+      'New Enquiry - Vira & Reva Banquets' +
+      '\nName: ' + name +
+      '\nMobile Number: ' + mobile +
+      '\nEmail ID: ' + email +
+      '\nEvent Type: ' + event;
+
+    if (message) {
+      waText += '\nMessage: ' + message;
+    }
+
+    const waLink = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(waText);
+
     document.getElementById('success').style.display = 'block';
-    // Connect this handler to your CRM, Google Apps Script, Formspree,
-    // website backend, or WhatsApp / lead-management endpoint.
+    window.open(waLink, '_blank', 'noopener');
+
     leadForm.reset();
   });
 }

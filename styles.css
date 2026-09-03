@@ -147,7 +147,8 @@ h2.section-title{font-size:40px;line-height:1.18;margin-bottom:14px}
 .field input,.field select,.field textarea{
   width:100%;padding:13px 14px;border:1px solid var(--border);outline:none;font-size:14px;background:#fff;font-family:inherit
 }
-.field input:focus,.field select:focus{border-color:var(--gold)}
+.field textarea{min-height:96px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold)}
 .form-card button{width:100%;padding:15px;background:var(--navy);color:#fff;border:0;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:background .25s ease}
 .form-card button:hover{background:#1e3140}
 .form-note{font-size:11px;color:#8a8f93;margin-top:12px;text-align:center}
