@@ -159,7 +159,7 @@ footer{background:#0a1119;color:#aeb8bf;font-size:14px}
 .footer-top{padding:64px 0 44px;border-bottom:1px solid rgba(255,255,255,.08)}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:40px}
 .footer-brand{display:flex;flex-direction:column;gap:16px}
-.footer-brand img{height:32px;width:auto;filter:brightness(0) invert(1)}
+.footer-brand img{width:auto;filter:brightness(0) invert(1)}
 .footer-brand p{color:#8f9aa1;max-width:32ch;font-size:13.5px}
 .footer-social{display:flex;gap:12px;margin-top:6px}
 .footer-social a{width:34px;height:34px;border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;text-decoration:none;color:#cfd6da;font-size:14px}
