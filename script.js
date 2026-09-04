@@ -51,6 +51,41 @@
     reveals.forEach(function (el) { el.classList.add('in'); });
   }
 
+  /* ---------- Hero image slider (homepage) ---------- */
+  var slider = document.querySelector('.hero-slider');
+  if (slider) {
+    var slides = slider.querySelectorAll('.hero-slide');
+    var dotsWrap = document.querySelector('.hero-dots');
+    var current = 0;
+    var timer;
+
+    function goTo(i) {
+      slides[current].classList.remove('active');
+      if (dotsWrap) dotsWrap.children[current].classList.remove('active');
+      current = (i + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      if (dotsWrap) dotsWrap.children[current].classList.add('active');
+    }
+    function next() { goTo(current + 1); }
+    function start() { timer = setInterval(next, 5500); }
+    function stop() { clearInterval(timer); }
+
+    if (dotsWrap) {
+      slides.forEach(function (s, i) {
+        var b = document.createElement('button');
+        if (i === 0) b.classList.add('active');
+        b.setAttribute('aria-label', 'Show slide ' + (i + 1));
+        b.addEventListener('click', function () { stop(); goTo(i); start(); });
+        dotsWrap.appendChild(b);
+      });
+    }
+    if (slides.length > 1) {
+      start();
+      slider.closest('.hero').addEventListener('mouseenter', stop);
+      slider.closest('.hero').addEventListener('mouseleave', start);
+    }
+  }
+
   /* ---------- Celebration builder → WhatsApp ---------- */
   var form = document.querySelector('#celebration-builder');
   if (form) {
