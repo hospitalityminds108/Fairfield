@@ -291,3 +291,92 @@ footer{background:#0a1119;color:#aeb8bf;font-size:14px}
   .footer-legal-links{margin-top:6px}
   .footer-legal-links a:first-child{margin-left:0}
 }
+
+/* ===== Floating Action Buttons ===== */
+  .floating-buttons {
+    position: fixed;
+    right: 20px;
+    bottom: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+  }
+
+  .float-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: floatPulse 2.4s ease-in-out infinite;
+  }
+
+  .float-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.32);
+  }
+
+  .float-btn svg {
+    width: 28px;
+    height: 28px;
+    fill: #ffffff;
+  }
+
+  .float-btn.whatsapp {
+    background-color: #25D366;
+  }
+
+  .float-btn.call {
+    background-color: #B08D57; /* matches gold/brand tone; adjust to your palette */
+  }
+
+  @keyframes floatPulse {
+    0%, 100% { box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+    50% { box-shadow: 0 6px 22px rgba(37, 211, 102, 0.45); }
+  }
+
+  .float-btn.call { animation: none; } /* keep pulse only on WhatsApp */
+
+  /* Tooltip label on hover (desktop only) */
+  .float-btn .label {
+    position: absolute;
+    right: 68px;
+    background: #1f1f1f;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .float-btn:hover .label {
+    opacity: 1;
+  }
+
+  @media (max-width: 600px) {
+    .floating-buttons {
+      right: 14px;
+      bottom: 16px;
+      gap: 10px;
+    }
+    .float-btn {
+      width: 50px;
+      height: 50px;
+    }
+    .float-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+    .float-btn .label {
+      display: none; /* hide tooltip on small screens */
+    }
+  }
