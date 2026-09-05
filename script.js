@@ -165,3 +165,44 @@
     });
   });
 })();
+
+/* ---------- Premium Location Chip Effects ---------- */
+(function() {
+  const chips = document.querySelectorAll('.loc-chip[data-tilt]');
+
+  chips.forEach(chip => {
+    const glow = chip.querySelector('.chip-glow');
+
+    chip.addEventListener('mousemove', (e) => {
+      const rect = chip.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      // Move the glow
+      if (glow) {
+        glow.style.left = `${x}px`;
+        glow.style.top = `${y}px`;
+      }
+
+      // Calculate 3D Tilt
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Max rotation degrees
+      const maxRotate = 8; 
+      
+      const rotateX = ((y - centerY) / centerY) * -maxRotate;
+      const rotateY = ((x - centerX) / centerX) * maxRotate;
+
+      chip.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    });
+
+    chip.addEventListener('mouseleave', () => {
+      // Reset position
+      chip.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+      if (glow) {
+        glow.style.opacity = '0';
+      }
+    });
+  });
+})();
