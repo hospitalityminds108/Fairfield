@@ -64,7 +64,7 @@ body:before{
 .brand{display:flex;align-items:center;gap:13px;font-weight:700;color:var(--ink);font-family:var(--serif)}
 .brandmark{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--champagne);display:grid;place-items:center;font-family:var(--serif);color:var(--copper);font-size:1.4rem;font-weight:600;background:radial-gradient(circle at 30% 30%,rgba(233,197,143,.25),transparent 70%);transition:transform .5s var(--ease)}
 .brand:hover .brandmark{transform:rotate(20deg) scale(1.05)}
-.brand-logo{height:48px;width:auto;display:block;transition:transform .45s var(--ease)}
+.brand-logo{height: 85px;width:auto;display:block;transition:transform .45s var(--ease)}
 .brand:hover .brand-logo{transform:scale(1.04)}
 .brand-text{display:flex;flex-direction:column}
 .brand-name{font-size:1.32rem;line-height:1.05;font-weight:600;letter-spacing:.01em}
@@ -105,8 +105,8 @@ body:before{
 .hero:after{content:"";position:absolute;inset:20px;border:1px solid rgba(233,197,143,.32);border-radius:30px;pointer-events:none;animation:heroFrameIn 1.2s var(--ease) both;z-index:3}
 
 .hero-slider{position:absolute;inset:0;z-index:0}
-.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.8s var(--ease);animation:heroKenBurns 15s ease-in-out infinite}
-.hero-slide.active{opacity:1;z-index:1}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.8s var(--ease)}
+.hero-slide.active{opacity:1;z-index:1;animation:heroKenBurns 9s ease-out forwards}
 .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(95deg,rgba(10,30,38,.95) 0%,rgba(10,30,38,.82) 42%,rgba(10,30,38,.30) 78%)}
 .hero-dots{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:4;display:flex;gap:10px}
 .hero-dots button{width:9px;height:9px;padding:0;border-radius:50%;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.35);cursor:pointer;transition:.3s var(--ease)}
@@ -255,7 +255,7 @@ h2 em,h3 em{color:var(--copper);font-style:italic}
 .footer-brand .brand-name{color:#fff}
 .footer-brand small{color:rgba(255,255,255,.6)}
 .brand-logo-wrap{background:#fffaf2;border-radius:14px;padding:9px 16px;display:inline-flex;align-items:center;box-shadow:0 10px 28px rgba(0,0,0,.28);flex:0 0 auto}
-.footer-logo{height:34px}
+.footer-logo{height: 120px;}
 .footer-bottom{margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.10);font-size:.82rem;color:rgba(255,255,255,.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
 .sticky-mobile{display:none}
@@ -268,10 +268,10 @@ h2 em,h3 em{color:var(--copper);font-style:italic}
 .float-btn .ftip{position:absolute;right:calc(100% + 14px);top:50%;transform:translateY(-50%) translateX(6px);background:var(--ink);color:#fff;padding:7px 14px;border-radius:10px;font-size:.78rem;font-weight:600;letter-spacing:.01em;white-space:nowrap;opacity:0;visibility:hidden;transition:.25s var(--ease);box-shadow:var(--shadow-sm)}
 .float-btn:hover .ftip{opacity:1;visibility:visible;transform:translateY(-50%) translateX(0)}
 @media(max-width:640px){
-  .float-actions{right:16px;bottom:98px;gap:12px}
-  .float-btn{width:50px;height:50px}
-  .float-btn svg{width:22px;height:22px}
-  .float-btn .ftip{display:none}
+  /* The sticky bottom bar (Call / WhatsApp / Check Date) already covers
+     these actions on phones, so hide the floating bubbles to avoid two
+     sets of the same buttons fighting for space on a small screen. */
+  .float-actions{display:none}
 }
 
 .reveal{opacity:0;transform:translateY(36px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
@@ -370,20 +370,29 @@ h2 em,h3 em{color:var(--copper);font-style:italic}
 @keyframes underline{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes heroFrameIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
 @keyframes floatOrb{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-26px)}}
-@keyframes heroKenBurns{0%{transform:scale(1.02)}50%{transform:scale(1.1)}100%{transform:scale(1.02)}}
+@keyframes heroKenBurns{0%{transform:scale(1.0)}100%{transform:scale(1.07)}}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
 
+/* ===== Large tablets / small laptops ===== */
+@media(max-width:1100px){
+  .section{padding:96px 0}
+  .hero-content{padding:110px 0 120px}
+}
+
+/* ===== Tablets & below: nav becomes a toggle menu, grids go 2-up ===== */
 @media(max-width:1000px){
-  .nav-links{position:fixed;inset:74px 0 auto 0;flex-direction:column;background:rgba(255,250,242,.98);backdrop-filter:blur(16px);padding:24px;gap:6px;box-shadow:0 20px 50px rgba(22,52,66,.18);transform:translateY(-120%);transition:.4s var(--ease);align-items:stretch;border-bottom:1px solid var(--line)}
+  .nav-links{position:fixed;inset:74px 0 auto 0;flex-direction:column;background:rgba(255,250,242,.98);backdrop-filter:blur(16px);padding:24px;gap:6px;box-shadow:0 20px 50px rgba(22,52,66,.18);transform:translateY(-120%);transition:.4s var(--ease);align-items:stretch;border-bottom:1px solid var(--line);max-height:calc(100vh - 74px);overflow-y:auto}
   .nav-links.open{transform:translateY(0)}
   .nav-links>a{padding:12px 4px;border-bottom:1px solid var(--line-soft)}
+  .nav-links .btn{margin-top:6px}
   .nav-drop{position:static}
   .nav-drop-panel{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:0;background:transparent;min-width:0;padding:4px 0 4px 16px;display:grid}
   .nav-drop-panel a{font-size:.86rem;padding:8px 10px}
   .nav-drop>a:after{display:none}
-  .nav-toggle{display:block}
+  .nav-toggle{display:block;flex:0 0 auto}
   .hero{min-height:auto;background-attachment:scroll}
+  .hero-content{padding:100px 0 110px}
   .hero-proof{grid-template-columns:repeat(2,1fr)}
   .quick-grid{grid-template-columns:1fr 1fr}
   .quick-intro{grid-column:1/-1}
@@ -395,32 +404,117 @@ h2 em,h3 em{color:var(--copper);font-style:italic}
   .gallery-grid{grid-template-columns:1fr 1fr}
   .stats-band .stat-cell:nth-child(2){border-right:0}
   .stats-band .stat-cell{border-bottom:1px solid rgba(255,255,255,.10)}
+  .page-hero{min-height:64vh;padding:130px 0 60px}
 }
+
+/* ===== Tablet portrait fine-tuning ===== */
+@media(max-width:780px){
+  .section{padding:76px 0}
+  .section-sm{padding:60px 0}
+  .section-head{margin-bottom:36px}
+  .quote-band{padding:48px 34px}
+  .builder-wrap{padding:44px 34px}
+  .cta{padding:52px 30px}
+  .stats-band{grid-template-columns:1fr 1fr}
+  .venue{padding:36px}
+  .venue h3{font-size:2.3rem}
+}
+
+/* ===== Phones: this is where sections must go fully single-column ===== */
 @media(max-width:640px){
-  .container{width:min(100% - 28px,1200px)}
-  .section{padding:80px 0}
+  .container,.container-narrow{width:min(100% - 28px,1200px)}
+  .section{padding:64px 0}
+  .section-sm{padding:48px 0}
+  .section-head{margin-bottom:30px}
   .hero{min-height:auto;background-position:60% center}
-  .hero-content{padding:90px 0 110px}
-  .hero h1{font-size:3.1rem}
-  .hero-copy{font-size:1.04rem}
-  .hero-proof{grid-template-columns:1fr 1fr}
-  .cards,.builder,.flow,.footer-grid,.why-grid,.loc-strip,.menu-cards,.stats-band{grid-template-columns:1fr}
-  .quick-grid{grid-template-columns:1fr 1fr}
-  .venues{gap:16px}
-  .venue{padding:30px}
-  .venue-stats{grid-template-columns:1fr 1fr}
+  .hero-content{padding:88px 0 100px}
+  .hero h1{font-size:2.6rem;letter-spacing:-.02em}
+  .hero-copy{font-size:1.02rem;margin:18px 0 24px}
+  .hero-actions{gap:10px}
+  .hero-actions .btn{flex:1 1 auto;justify-content:center}
+  .hero-proof{grid-template-columns:1fr 1fr;margin-top:30px}
+  .page-hero{min-height:auto;padding:118px 0 44px}
+  .page-hero h1{font-size:2.3rem}
+  .page-hero p{font-size:1rem}
+  .page-hero-actions{gap:10px}
+  .page-hero-actions .btn{flex:1 1 auto;justify-content:center}
+  .breadcrumb{font-size:.78rem}
+  .cards,.venues,.builder,.flow,.split,.feature-row,.footer-grid,.why-grid,.loc-strip,.menu-cards,.stats-band,.gallery-grid,.quick-grid{grid-template-columns:1fr}
+  .feature-row{gap:24px}
+  .feature-row.flip .feature-img{order:0}
+  .feature-img img{max-height:340px;object-fit:cover}
+  .split{gap:24px}
+  .poster{padding:10px;border-radius:22px}
+  .venues{gap:20px}
+  .venue{padding:26px;min-height:0}
+  .venue h3{font-size:2rem}
+  .venue .tag{margin-bottom:16px}
+  .venue p{font-size:.96rem;max-width:none}
+  .venue-stats{grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0}
+  .venue-stat{padding:12px 8px;min-width:0}
+  .venue-stat strong{font-size:1.12rem;overflow-wrap:break-word}
+  .venue-stat span{font-size:.68rem}
+  .why-grid,.cards{gap:14px}
+  .why-item,.card{padding:24px}
+  .menu-cards{gap:14px}
+  .menu-card{padding:26px}
   .builder-wrap{padding:32px 22px;border-radius:26px}
-  .cta{padding:44px 24px}
-  .quote-band{padding:40px 24px}
-  .feature-row{gap:30px}
-  .stats-band .stat-cell{border-bottom:1px solid rgba(255,255,255,.10)}
+  .builder{gap:14px}
+  .builder-actions{flex-direction:column;align-items:stretch;gap:10px}
+  .builder-actions .btn{width:100%}
+  .cta{padding:40px 22px}
+  .cta .btn{display:block;width:100%;margin:8px 0}
+  .quote-band{padding:36px 22px}
+  .quote-band blockquote{font-size:1.4rem}
+  .stats-band .stat-cell{border-right:0;border-bottom:1px solid rgba(255,255,255,.10);padding:26px 16px}
+  .stats-band .stat-cell:last-child{border-bottom:0}
+  .marquee-track{font-size:1.1rem;gap:30px;animation-duration:20s}
+  .marquee-track span{gap:30px}
+  .faq details{padding:18px 20px}
+  .faq summary{font-size:1.08rem}
+  .loc-strip{gap:12px}
   .sticky-mobile{position:fixed;bottom:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:1fr 1fr 1.25fr;background:#fff;border-top:1px solid var(--line);padding:9px;gap:8px;box-shadow:0 -10px 34px rgba(22,52,66,.14)}
   .sticky-mobile a{display:grid;place-items:center;min-height:50px;border-radius:13px;font-size:.82rem;font-weight:700;transition:.2s var(--ease)}
   .sticky-mobile a:active{transform:scale(.96)}
   .sticky-mobile .wa{background:#eef8f1}
   .sticky-mobile .book{background:var(--copper);color:#fff}
-  .footer{padding-bottom:130px}
+  .footer{padding:48px 0 130px}
+  .footer-grid{gap:28px}
   .footer-bottom{flex-direction:column;align-items:flex-start}
+}
+
+/* ===== Small phones (iPhone SE / compact Android) ===== */
+@media(max-width:420px){
+  .container,.container-narrow{width:min(100% - 22px,1200px)}
+  .topbar{font-size:.74rem;padding:8px 10px;line-height:1.4}
+  .brand-logo{height:38px}
+  .nav-inner{min-height:66px}
+  .hero-content{padding:78px 0 90px}
+  .hero h1{font-size:2.15rem}
+  .hero-copy{font-size:.96rem}
+  .hero-proof{grid-template-columns:1fr 1fr;gap:10px}
+  .proof{padding:12px}
+  .hero-actions .btn,.page-hero-actions .btn{font-size:.9rem;padding:13px 18px}
+  .page-hero h1{font-size:1.95rem}
+  .section-head h2{font-size:1.9rem}
+  .venue{padding:22px}
+  .venue-stats{grid-template-columns:repeat(3,1fr);gap:6px;margin:16px 0}
+  .venue-stat{padding:10px 6px}
+  .venue-stat strong{font-size:1rem}
+  .venue-stat span{font-size:.6rem}
+  .venue h3{font-size:1.9rem}
+  .why-item .num{font-size:1.8rem}
+  .why-item h3{font-size:1.2rem}
+  .card h3{font-size:1.35rem}
+  .quote-band blockquote{font-size:1.2rem}
+  .cta h2{font-size:1.9rem}
+  .field input,.field select{padding:13px 14px}
+  .sticky-mobile{padding:7px;gap:6px}
+  .sticky-mobile a{min-height:46px;font-size:.76rem}
+}
+
+@media(max-width:640px) and (hover:none){
+  .card:hover,.venue:hover,.why-item:hover,.menu-card:hover,.loc-chip:hover{transform:none;box-shadow:0 8px 28px rgba(22,52,66,.05)}
 }
 
 @media(prefers-reduced-motion:reduce){

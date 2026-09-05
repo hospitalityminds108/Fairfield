@@ -56,33 +56,67 @@
   if (slider) {
     var slides = slider.querySelectorAll('.hero-slide');
     var dotsWrap = document.querySelector('.hero-dots');
+    var SLIDE_MS = 6500; // how long each slide stays on screen
     var current = 0;
-    var timer;
+    var timer = null;
+    var hovered = false;
+
+    // Restart the Ken Burns zoom on a slide every time it becomes active,
+    // instead of letting the animation loop forever in the background —
+    // that's what was causing the visible "jump" in zoom level on change.
+    function restartZoom(slide) {
+      slide.style.animation = 'none';
+      // eslint-disable-next-line no-unused-expressions
+      slide.offsetHeight; // force reflow so the animation can be re-triggered
+      slide.style.animation = '';
+    }
 
     function goTo(i) {
       slides[current].classList.remove('active');
       if (dotsWrap) dotsWrap.children[current].classList.remove('active');
       current = (i + slides.length) % slides.length;
-      slides[current].classList.add('active');
+      var activeSlide = slides[current];
+      activeSlide.classList.add('active');
+      restartZoom(activeSlide);
       if (dotsWrap) dotsWrap.children[current].classList.add('active');
     }
     function next() { goTo(current + 1); }
-    function start() { timer = setInterval(next, 5500); }
-    function stop() { clearInterval(timer); }
+    function start() {
+      stop(); // never let two intervals stack up
+      if (slides.length > 1 && !hovered && !document.hidden) {
+        timer = setInterval(next, SLIDE_MS);
+      }
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    // Belt-and-braces: whatever the markup says, make sure exactly one
+    // slide (the first) is visible immediately — this is what was leaving
+    // the hero blank until the first interval fired.
+    slides.forEach(function (s, i) { s.classList.toggle('active', i === 0); });
 
     if (dotsWrap) {
       slides.forEach(function (s, i) {
         var b = document.createElement('button');
         if (i === 0) b.classList.add('active');
         b.setAttribute('aria-label', 'Show slide ' + (i + 1));
-        b.addEventListener('click', function () { stop(); goTo(i); start(); });
+        b.addEventListener('click', function () { goTo(i); start(); });
         dotsWrap.appendChild(b);
       });
     }
+    if (slides.length) {
+      restartZoom(slides[0]);
+    }
     if (slides.length > 1) {
       start();
-      slider.closest('.hero').addEventListener('mouseenter', stop);
-      slider.closest('.hero').addEventListener('mouseleave', start);
+      var heroEl = slider.closest('.hero');
+      heroEl.addEventListener('mouseenter', function () { hovered = true; stop(); });
+      heroEl.addEventListener('mouseleave', function () { hovered = false; start(); });
+      // Pause fetching/animating while the tab isn't visible so the slider
+      // doesn't silently "catch up" through several slides at once when
+      // the user switches back to this tab.
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) stop(); else start();
+      });
     }
   }
 
